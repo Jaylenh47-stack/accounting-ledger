@@ -30,7 +30,7 @@ public class ConsoleHelper {
     public static String promptForString(String prompt) {
 
         System.out.println(prompt + ": ");
-        return scanner.nextLine();
+        return scanner.nextLine().toUpperCase();
     }
 
     public static float promptForFloat(String prompt){
@@ -53,6 +53,30 @@ public class ConsoleHelper {
 
         return input;
     }
+
+    public static double promptForDouble(String prompt) {
+        double input = 0;
+        boolean isInvalid = false;
+
+        do {
+            try {
+                System.out.println(prompt + ": ");
+                input = scanner.nextDouble();
+                scanner.nextLine();
+                isInvalid = true;
+            } catch (Exception ex) {
+                scanner.nextLine();
+                System.out.println("Invalid entry, please enter a number");
+            }
+
+        }
+        while (!isInvalid);
+
+        return input;
+    }
+
+
+
 
 
 }
