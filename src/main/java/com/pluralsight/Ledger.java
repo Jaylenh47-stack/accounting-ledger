@@ -3,18 +3,18 @@ package com.pluralsight;
 import java.util.ArrayList;
 
 public class Ledger {
-   private  ArrayList<String> entries;
-   private ArrayList<Double> deposits;
-   private ArrayList<Double> payments;
+   private  ArrayList<String> transactions;
+   private  ArrayList<Double> deposits;
+   private  ArrayList<Double> payments;
 
     public Ledger(ArrayList<String> entries, ArrayList<Double> deposits, ArrayList<Double> payments) {
-        this.entries = entries;
+        this.transactions = entries;
         this.deposits = deposits;
         this.payments = payments;
     }
 
     public ArrayList<String> getEntries() {
-        return entries;
+        return transactions;
     }
 
     public ArrayList<Double> getDeposits() {
@@ -24,4 +24,23 @@ public class Ledger {
     public ArrayList<Double> getPayments() {
         return payments;
     }
+
+//    public String promptForLedgerMenu(String prompt){
+//        ConsoleHelper.promptForString(prompt);
+//
+//        return ledgerMenuChoice;
+//
+//
+//    }
+
+    public double addToCollectionDeposits(){
+        // loop through transactions arraylist and append transactions with "+" to it
+        return 0;
+    }
+
+    public double appendToCollectionPayments(){
+        // loop through transactions arraylist and append transactions with "-" to it
+        return 0;
+    }
+
 }
