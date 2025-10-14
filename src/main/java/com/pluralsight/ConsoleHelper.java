@@ -1,5 +1,7 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleHelper {
@@ -30,7 +32,8 @@ public class ConsoleHelper {
     public static String promptForString(String prompt) {
 
         System.out.println(prompt + ": ");
-        return scanner.nextLine().toUpperCase();
+        return scanner.nextLine();
+
     }
 
     public static float promptForFloat(String prompt){
@@ -71,6 +74,25 @@ public class ConsoleHelper {
 
         }
         while (!isInvalid);
+
+        return input;
+    }
+
+    public static LocalDate promptForDate(String prompt){
+        LocalDate input = LocalDate.parse("");
+        boolean isInvalid = false;
+
+        do {
+            try {
+                System.out.println(prompt + ": ");
+                input = LocalDate.parse(scanner.nextLine());
+
+                isInvalid = true;
+            } catch (Exception ex) {
+                scanner.nextLine();
+                System.out.println("Invalid entry, please enter a date (YYYY-MM-DD");
+            }
+        }while(!isInvalid);
 
         return input;
     }
