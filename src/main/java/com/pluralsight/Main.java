@@ -5,7 +5,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Main {
@@ -79,32 +78,34 @@ public class Main {
     }
 
     private static void ledgerMenu(){
-       String  userChoice = ConsoleHelper.promptForString("""
-                            Ledger
-                ___________________________________
-                A) All - View all entries
-                D) Deposits - View all deposits
-                P) Payments - View all payments
-                R) Reports - View the reports menu
-                H) Home - go back to the home page""").toUpperCase();
+       while(true) {
+           String userChoice = ConsoleHelper.promptForString("""
+                               Ledger
+                   ___________________________________
+                   A) All - View all entries
+                   D) Deposits - View all deposits
+                   P) Payments - View all payments
+                   R) Reports - View the reports menu
+                   H) Home - go back to the home page""").toUpperCase();
 
-        switch (userChoice){
-            case "A":
-                viewAllTransactions();
-                break;
-            case "D":
-                // view all deposits
-                break;
-            case "R":
-                reportsMenu();
-               break;
-            case "H":
+           switch (userChoice) {
+               case "A":
+                   viewAllTransactions();
+                   break;
+               case "D":
+                   // view all deposits
+                   break;
+               case "R":
+                   reportsMenu();
+                   break;
+               case "H":
 
-
-        }
+           }
+       }
     }
 
     private static void reportsMenu(){
+        while(true) {
         int reportsChoice = ConsoleHelper.promptForInt("""
                             Reports
                 ___________________________________
@@ -115,28 +116,33 @@ public class Main {
                 5) Search by Vendor
                 0) Back - go back to the Ledger page""");
 
-        switch(reportsChoice){
-            case 1:
-                //Month to Date
-                monthToDate();
-                break;
-            case 2:
-                // Previous Month
-                break;
-            case 3:
-                // Year to date
-                break;
-            case 4:
-                // Previous Year
-                break;
-            case 5:
-                // Search by Vendor
-                break;
-            case 0:
-                ledgerMenu();
-                break;
-        }
+            switch (reportsChoice) {
+                case 1:
+                    //Month to Date
+                    monthToDate();
+                    break;
+                case 2:
+                    // Previous Month
+                    break;
+                case 3:
+                    // Year to date
+                    yearToDate();
+                    break;
+                case 4:
+                    // Previous Year
+                    break;
+                case 5:
+                    // Search by Vendor
+                    searchByVendor();
+                    break;
+                case 0:
+                    ledgerMenu();
+                    return;
+                default:
+                    System.out.println("Invalid command, please type an integer 1 - 5");
 
+            }
+        }
     }
 
     private static void addDepositOrPayment(){
@@ -239,15 +245,88 @@ public class Main {
     }
 
     private static void previousMonth(){
+        //special case for january because previous month is 12 of the previous year
+        String todaysDate = LocalDate.now().toString();
+        String[] todaysYearAndMonth = todaysDate.split("-");
+
+
+        try {
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+
+            String fileLine;
+            while ((fileLine = bufReader.readLine()) != null) {
+
+                String[] dateFromTransactions = fileLine.split("\\|");
+                String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
+                if ((yearMonthDaySplit[0].equals(todaysYearAndMonth[0])) && (yearMonthDaySplit[1].equals(todaysYearAndMonth[1]))){
+                    System.out.println(fileLine);
+                }
+
+
+                //System.out.println(Arrays.toString(yearMonthDaySplit));
+                //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
+                //print if they match
+            }
+        }
+        catch (IOException e){
+            System.out.println("there was a file error");
+        }
 
     }
 
     private static void yearToDate(){
+        String todaysDate = LocalDate.now().toString();
+        String[] todaysYearAndMonth = todaysDate.split("-");
 
+
+        try {
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+            String fileLine;
+            while ((fileLine = bufReader.readLine()) != null) {
+
+                String[] dateFromTransactions = fileLine.split("\\|");
+                String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
+                if (yearMonthDaySplit[0].equals(todaysYearAndMonth[0])){
+                    System.out.println(fileLine);
+                }
+
+
+                //System.out.println(Arrays.toString(yearMonthDaySplit));
+                //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
+                //print if they match
+            }
+        }
+        catch (IOException e){
+            System.out.println("there was a file error");
+        }
     }
 
     private static void searchByVendor(){
 
+        String userInput = ConsoleHelper.promptForString("Name of vendor: ");
+
+        try {
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+            String fileLine;
+            while ((fileLine = bufReader.readLine()) != null) {
+
+                String[] barSplit = fileLine.split("\\|");
+                String vendor = barSplit[3].toLowerCase();
+                if (vendor.contains(userInput.toLowerCase())){
+                    System.out.println(fileLine);
+                }
+
+
+
+
+            }
+        }
+        catch (IOException e){
+            System.out.println("there was a file error");
+        }
     }
 
 
