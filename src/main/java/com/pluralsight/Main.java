@@ -5,6 +5,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Main {
@@ -60,7 +61,7 @@ public class Main {
                 }
 //                fileReader.close(); fileWriter.close(); bufReader.close(); bufWriter.close();
             }
-            catch (IOException e){
+            catch (Exception e){
                 System.out.println("There was a file error");
                 e.printStackTrace();
             }
@@ -117,6 +118,7 @@ public class Main {
         switch(reportsChoice){
             case 1:
                 //Month to Date
+                monthToDate();
                 break;
             case 2:
                 // Previous Month
@@ -187,7 +189,7 @@ public class Main {
             boolean isAfter = false;
 
             //compare current transaction with all other transactions until currentIteration.get(i).getDate() is before nextTransaction date
-            //make this new found transaction with the most recent date the new transaction being compared to other transactions
+            //make this new-found transaction with the most recent date the new transaction being compared to other transactions
             //repeat this until there is no more transactions to compare it to
             //print it and remove it from the arraylist
             for (int i = 0; i < transactionsList.size(); i++){
@@ -208,10 +210,32 @@ public class Main {
 
     private static void monthToDate(){
         //read file line by line
-        //String[] dateFromTransactions = fileLine.split("\\|");
-        //String[] yearMonthDaySplit = dateFromTransactions.split("\\-");
-        //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
-        //print if they match
+        String todaysDate = LocalDate.now().toString();
+        String[] todaysYearAndMonth = todaysDate.split("-");
+
+
+        try {
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+            String fileLine;
+            while ((fileLine = bufReader.readLine()) != null) {
+
+            String[] dateFromTransactions = fileLine.split("\\|");
+            String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
+            if ((yearMonthDaySplit[0].equals(todaysYearAndMonth[0])) && (yearMonthDaySplit[1].equals(todaysYearAndMonth[1]))){
+                System.out.println(fileLine);
+                }
+
+
+                //System.out.println(Arrays.toString(yearMonthDaySplit));
+            //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
+            //print if they match
+        }
+        }
+        catch (IOException e){
+            System.out.println("there was a file error");
+        }
+
     }
 
     private static void previousMonth(){
