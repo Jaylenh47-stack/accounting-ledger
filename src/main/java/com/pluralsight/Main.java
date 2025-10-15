@@ -9,8 +9,12 @@ import java.util.ArrayList;
 
 public class Main {
 
+    public static ArrayList<Transaction> transactions;
 
     public static void main(String[] args){
+
+        transactions = readTransactionsFromFileAndReturn();
+
 
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
 
@@ -18,10 +22,10 @@ public class Main {
 
 
             try {
-                FileReader fileReader = new FileReader("transactions.csv");
-                BufferedReader bufReader = new BufferedReader(fileReader);
-                FileWriter fileWriter = new FileWriter("transactions.csv", true);
-                BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+//                FileReader fileReader = new FileReader("transactions.csv");
+//                BufferedReader bufReader = new BufferedReader(fileReader);
+//                FileWriter fileWriter = new FileWriter("transactions.csv", true);
+//                BufferedWriter bufWriter = new BufferedWriter(fileWriter);
 
                 //Home screen -loops until user exits
 
@@ -54,7 +58,7 @@ public class Main {
                         System.out.println("Invalid option, please enter a \"D\", \"P\",\"L\", or \"X\"," );
                         break;
                 }
-                fileReader.close(); fileWriter.close(); bufReader.close(); bufWriter.close();
+//                fileReader.close(); fileWriter.close(); bufReader.close(); bufWriter.close();
             }
             catch (IOException e){
                 System.out.println("There was a file error");
@@ -66,6 +70,12 @@ public class Main {
     }
 
 
+    private static ArrayList<Transaction> readTransactionsFromFileAndReturn(){
+        ArrayList<Transaction> result = new ArrayList<Transaction>();
+
+        //between here, read from file and populate result...
+        return result;
+    }
 
     private static void ledgerMenu(){
        String  userChoice = ConsoleHelper.promptForString("""
@@ -128,6 +138,7 @@ public class Main {
     }
 
     private static void addDepositOrPayment(){
+
         try {
             //Prompt user for transaction information and write it to the csv file
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
@@ -175,7 +186,10 @@ public class Main {
             // iterate through transactionsList for the most recent date
             boolean isAfter = false;
 
-
+            //compare current transaction with all other transactions until currentIteration.get(i).getDate() is before nextTransaction date
+            //make this new found transaction with the most recent date the new transaction being compared to other transactions
+            //repeat this until there is no more transactions to compare it to
+            //print it and remove it from the arraylist
             for (int i = 0; i < transactionsList.size(); i++){
                 int nextTransaction = i+1;
                 if (transactionsList.get(i).getDate().isAfter(transactionsList.get(nextTransaction).getDate())){
@@ -190,6 +204,26 @@ public class Main {
             System.out.println("There was a file error");
             e.printStackTrace();
         }
+    }
+
+    private static void monthToDate(){
+        //read file line by line
+        //String[] dateFromTransactions = fileLine.split("\\|");
+        //String[] yearMonthDaySplit = dateFromTransactions.split("\\-");
+        //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
+        //print if they match
+    }
+
+    private static void previousMonth(){
+
+    }
+
+    private static void yearToDate(){
+
+    }
+
+    private static void searchByVendor(){
+
     }
 
 
