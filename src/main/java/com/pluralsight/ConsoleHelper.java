@@ -20,7 +20,7 @@ public class ConsoleHelper {
                 isInvalid = true;
             } catch (Exception ex) {
                 scanner.nextLine();
-                System.out.println("Invalid entry, please enter a whole number");
+                System.out.println("Invalid entry, please enter a number 0 - 5");
             }
 
         }

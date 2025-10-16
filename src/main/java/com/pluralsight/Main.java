@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 
 public class Main {
-
+//ToDo: Ensure all error messages are working, learn about sorting an arraylist and complete the ledger menu options, add messages throughout the program that makes it more user friendly.
     public static ArrayList<Transaction> transactions;
 
     public static void main(String[] args){
@@ -17,19 +17,15 @@ public class Main {
 
 
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
+        homeMenu();
 
+
+    }
+
+    private static void homeMenu(){
         while(true){
-
-
             try {
-//                FileReader fileReader = new FileReader("transactions.csv");
-//                BufferedReader bufReader = new BufferedReader(fileReader);
-//                FileWriter fileWriter = new FileWriter("transactions.csv", true);
-//                BufferedWriter bufWriter = new BufferedWriter(fileWriter);
-
-                //Home screen -loops until user exits
-
-                String homeScreenPrompt = ConsoleHelper.promptForString(
+                String homeScreenInput = ConsoleHelper.promptForString(
                         """        
                                         Home
                                    _______________
@@ -38,22 +34,20 @@ public class Main {
                                    L) Ledger
                                    X) Exit""").toUpperCase();
 
-
-
-                switch (homeScreenPrompt) {
+                switch (homeScreenInput) {
                     case "D":
                         //D) add deposit - prompt and save to csv file, show balance after
-                            addDepositOrPayment();
+                        addDepositOrPayment();
                         break;
                     case "P":
                         //P) make payment - prompt for the debit information, save to csv file, show balance after
                         addDepositOrPayment();
                         break;
                     case "L":
-                      ledgerMenu();
+                        ledgerMenu();
                         break;
                     case "X":
-                        return;
+                        System.exit(0);
                     default:
                         System.out.println("Invalid option, please enter a \"D\", \"P\",\"L\", or \"X\"," );
                         break;
@@ -65,10 +59,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
-
-
     }
-
 
     private static ArrayList<Transaction> readTransactionsFromFileAndReturn(){
         ArrayList<Transaction> result = new ArrayList<Transaction>();
@@ -99,6 +90,10 @@ public class Main {
                    reportsMenu();
                    break;
                case "H":
+                   homeMenu();
+                   break;
+               default:
+                   System.out.println("Invalid input, please enter a \"A\", \"D\", \"R\", or \"H\"");
 
            }
        }
@@ -123,6 +118,7 @@ public class Main {
                     break;
                 case 2:
                     // Previous Month
+                    previousMonth();
                     break;
                 case 3:
                     // Year to date
@@ -137,9 +133,9 @@ public class Main {
                     break;
                 case 0:
                     ledgerMenu();
-                    return;
+                    break;
                 default:
-                    System.out.println("Invalid command, please type an integer 1 - 5");
+                    System.out.println("Invalid command, please type an number 0 - 5");
 
             }
         }
@@ -151,11 +147,13 @@ public class Main {
             //Prompt user for transaction information and write it to the csv file
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
             BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+
             LocalDate userDate = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD): "));
             LocalTime userTime = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction: "));
             double userAmount = ConsoleHelper.promptForDouble("How much is the transaction for?");
             String userDescription = ConsoleHelper.promptForString("Enter a description of the transaction ");
             String userVendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
+
             Transaction t = new Transaction(userDate, userTime, userDescription, userVendor, userAmount);
             bufWriter.newLine();
             bufWriter.write(t.toString());
@@ -201,8 +199,7 @@ public class Main {
             for (int i = 0; i < transactionsList.size(); i++){
                 int nextTransaction = i+1;
                 if (transactionsList.get(i).getDate().isAfter(transactionsList.get(nextTransaction).getDate())){
-                //ToDO: complete the comparison of dates and times for each transaction in the loop
-                //ToDo: print the transaction when you have found the most recent one
+
                 }
 
             }
@@ -245,10 +242,14 @@ public class Main {
     }
 
     private static void previousMonth(){
-        //special case for january because previous month is 12 of the previous year
+
         String todaysDate = LocalDate.now().toString();
         String[] todaysYearAndMonth = todaysDate.split("-");
 
+        int currentYear = Integer.parseInt(todaysYearAndMonth[0]);
+        int currentMonth = Integer.parseInt(todaysYearAndMonth[1]);
+        int previousYear = currentYear - 1;
+        int previousMonth = currentMonth - 1;
 
         try {
             FileReader fileReader = new FileReader("transactions.csv");
@@ -256,18 +257,30 @@ public class Main {
 
             String fileLine;
             while ((fileLine = bufReader.readLine()) != null) {
-
+                if(fileLine.startsWith("date")){
+                    continue;
+                }
                 String[] dateFromTransactions = fileLine.split("\\|");
                 String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
-                if ((yearMonthDaySplit[0].equals(todaysYearAndMonth[0])) && (yearMonthDaySplit[1].equals(todaysYearAndMonth[1]))){
-                    System.out.println(fileLine);
+
+                //turn the fileLine year and month to integers so that we can compare them
+                int fileLineYear = Integer.parseInt(yearMonthDaySplit[0]);
+                int fileLineMonth = Integer.parseInt(yearMonthDaySplit[1]);
+
+                // if the current month is January, print fileLines if they are from December of the previous year
+                if (currentMonth == 1) {
+                    previousMonth = 12;
+
+                    if (fileLineMonth == previousMonth && fileLineYear == previousYear)
+                        System.out.println(fileLine);
                 }
-
-
-                //System.out.println(Arrays.toString(yearMonthDaySplit));
-                //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
-                //print if they match
+                else{
+                    if (fileLineYear == currentYear && fileLineMonth == previousMonth){
+                        System.out.println(fileLine);
+                    }
+                }
             }
+
         }
         catch (IOException e){
             System.out.println("there was a file error");
@@ -301,6 +314,10 @@ public class Main {
         catch (IOException e){
             System.out.println("there was a file error");
         }
+    }
+
+    private static void previousYear() {
+
     }
 
     private static void searchByVendor(){
