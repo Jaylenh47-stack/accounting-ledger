@@ -126,6 +126,7 @@ public class Main {
                     break;
                 case 4:
                     // Previous Year
+                    previousYear();
                     break;
                 case 5:
                     // Search by Vendor
@@ -244,10 +245,10 @@ public class Main {
     private static void previousMonth(){
 
         String todaysDate = LocalDate.now().toString();
-        String[] todaysYearAndMonth = todaysDate.split("-");
+        String[] todaysYearMonthDaySplit = todaysDate.split("-");
 
-        int currentYear = Integer.parseInt(todaysYearAndMonth[0]);
-        int currentMonth = Integer.parseInt(todaysYearAndMonth[1]);
+        int currentYear = Integer.parseInt(todaysYearMonthDaySplit[0]);
+        int currentMonth = Integer.parseInt(todaysYearMonthDaySplit[1]);
         int previousYear = currentYear - 1;
         int previousMonth = currentMonth - 1;
 
@@ -317,6 +318,33 @@ public class Main {
     }
 
     private static void previousYear() {
+        String todaysDate = LocalDate.now().toString();
+        String[] todaysYearMonthDaySplit = todaysDate.split("-");
+        int currentYear = Integer.parseInt(todaysYearMonthDaySplit[0]);
+        int previousYear = currentYear -1;
+
+        try{
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufReader = new BufferedReader(fileReader);
+            String fileLine;
+
+            while ((fileLine = bufReader.readLine()) !=null){
+                if(fileLine.startsWith("date")){
+                    continue;
+                }
+                String[] dateFromTransactions = fileLine.split("\\|");
+                String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
+
+                int fileLineYear = Integer.parseInt(yearMonthDaySplit[0]);
+                if (fileLineYear == previousYear){
+                    System.out.println(fileLine);
+                }
+            }
+
+        }
+        catch(Exception e){
+            System.out.println("There was a file error");
+        }
 
     }
 
