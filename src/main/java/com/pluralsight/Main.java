@@ -13,8 +13,8 @@ public class Main {
 
     public static void main(String[] args){
 
-        transactions = readTransactionsFromFileAndReturn();
-        
+        transactions = makeCollectionOfTransactions();
+
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
         homeMenu();
 
@@ -60,7 +60,7 @@ public class Main {
         }
     }
 
-    private static ArrayList<Transaction> readTransactionsFromFileAndReturn(){
+    private static ArrayList<Transaction> makeCollectionOfTransactions(){
         ArrayList<Transaction> result = new ArrayList<Transaction>();
 
         try {
@@ -109,6 +109,10 @@ public class Main {
                    break;
                case "D":
                    // view all deposits
+                   displayDeposits();
+                   break;
+               case "P":
+                   displayPayments();
                    break;
                case "R":
                    reportsMenu();
@@ -117,7 +121,7 @@ public class Main {
                    homeMenu();
                    break;
                default:
-                   System.out.println("Invalid input, please enter a \"A\", \"D\", \"R\", or \"H\"");
+                   System.out.println("Invalid input, please enter a \"A\", \"D\", \"P\", \"R\", or \"H\"");
 
            }
        }
@@ -182,25 +186,42 @@ public class Main {
             Transaction t = new Transaction(date, time, description, vendor, amount);
             bufWriter.newLine();
             bufWriter.write(t.toString());
+            fileWriter.close();
             bufWriter.close();
 
 
-    } catch(IOException f){
+    } catch(IOException e){
             System.out.println("there was a file error");
+            e.getStackTrace();
         }
     }
     //ToDo: make transactions print in order
 
     private static void viewAllTransactions(){
-        try {
-            FileReader fileReader = new FileReader("transactions.csv");
-            BufferedReader bufReader = new BufferedReader(fileReader);
-
-
-    }
-        catch(Exception e){
-            System.out.println("There was a file error");
+        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+        for (Transaction t: transactions) {
+            System.out.println(t.toString());
         }
+    }
+
+    private static void displayDeposits(){
+        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+        for (Transaction t: transactions) {
+            if (t.getAmount() > 0) {
+                System.out.println(t);
+            }
+
+        }
+    }
+
+    private static void displayPayments(){
+        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+        for (Transaction t : transactions){
+            if(t.getAmount() < 0) {
+                System.out.println(t);
+            }
+        }
+
     }
 
     private static void monthToDate(){
