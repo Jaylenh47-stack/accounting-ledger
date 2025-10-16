@@ -5,8 +5,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
-
+//question about how deep should i explain lambda expression
+// question about benefits of having one method for payments and deposits
+//question about ConsoleHelper promptForDate and promptForTime
 public class Main {
 //ToDo: Ensure all error messages are working, learn about sorting an arraylist and complete the ledger menu options, add messages throughout the program that makes it more user friendly.
     public static ArrayList<Transaction> transactions;
@@ -19,45 +20,6 @@ public class Main {
         homeMenu();
 
 
-    }
-
-    private static void homeMenu(){
-        while(true){
-            try {
-                String homeScreenInput = ConsoleHelper.promptForString(
-                        """        
-                                        Home
-                                   _______________
-                                   D) add deposit
-                                   P) Make Payment
-                                   L) Ledger
-                                   X) Exit""").toUpperCase();
-
-                switch (homeScreenInput) {
-                    case "D":
-                        //D) add deposit - prompt and save to csv file, show balance after
-                        addDepositOrPayment();
-                        break;
-                    case "P":
-                        //P) make payment - prompt for the debit information, save to csv file, show balance after
-                        addDepositOrPayment();
-                        break;
-                    case "L":
-                        ledgerMenu();
-                        break;
-                    case "X":
-                        System.exit(0);
-                    default:
-                        System.out.println("Invalid option, please enter a \"D\", \"P\",\"L\", or \"X\"," );
-                        break;
-                }
-//                fileReader.close(); fileWriter.close(); bufReader.close(); bufWriter.close();
-            }
-            catch (Exception e){
-                System.out.println("There was a file error");
-                e.printStackTrace();
-            }
-        }
     }
 
     private static ArrayList<Transaction> makeCollectionOfTransactions(){
@@ -92,9 +54,111 @@ public class Main {
         return result;
     }
 
+    private static void homeMenu(){
+        while(true){
+            try {
+                String homeScreenInput = ConsoleHelper.promptForString(
+                        """        
+                                        Home
+                                   _______________
+                                   D) add deposit
+                                   P) Make Payment
+                                   L) Ledger
+                                   X) Exit""").toUpperCase();
+
+                switch (homeScreenInput) {
+                    case "D":
+                        //D) add deposit - prompt and save to csv file, show balance after
+                        addDeposit();
+                        break;
+                    case "P":
+                        //P) make payment - prompt for the debit information, save to csv file, show balance after
+                        makePayment();
+                        break;
+                    case "L":
+                        ledgerMenu();
+                        break;
+                    case "X":
+                        System.exit(0);
+                    default:
+                        System.out.println("Invalid option, please enter a \"D\", \"P\",\"L\", or \"X\"," );
+                        break;
+                }
+            }
+            catch (Exception e){
+                System.out.println("There was a file error");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static void addDepositOrPayment(){
+
+        //LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD) "));
+        LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
+        LocalTime time = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction (HH:mm:ss) "));
+        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
+        String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
+        String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
+
+        Transaction t = new Transaction(date, time, description, vendor, amount);
+
+        saveTransaction(t);
+
+    }
+    private static void makePayment(){
+
+
+        LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
+        LocalTime time = ConsoleHelper.promptForTime("Time of the transaction (HH:mm:ss) ");
+        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
+        String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
+        String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
+
+        Transaction t = new Transaction(date, time, description, vendor, -amount);
+
+        saveTransaction(t);
+
+    }
+
+    private static void addDeposit(){
+
+        //LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD) "));
+        LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
+        LocalTime time = ConsoleHelper.promptForTime("Time of the transaction (HH:mm:ss) ");
+        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
+        String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
+        String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
+
+        Transaction t = new Transaction(date, time, description, vendor, amount);
+
+        saveTransaction(t);
+
+    }
+
+    private static void saveTransaction(Transaction t){
+
+        try {
+            //Prompt user for transaction information and write it to the csv file
+            FileWriter fileWriter = new FileWriter("transactions.csv", true);
+            BufferedWriter bufWriter = new BufferedWriter(fileWriter);
+
+
+
+            bufWriter.newLine();
+            bufWriter.write(t.toString());
+            bufWriter.close();
+
+
+        } catch(IOException e){
+            System.out.println("there was a file error");
+            e.printStackTrace();
+        }
+    }
+
     private static void ledgerMenu(){
-       while(true) {
-           String userChoice = ConsoleHelper.promptForString("""
+        while(true) {
+            String userChoice = ConsoleHelper.promptForString("""
                                Ledger
                    ___________________________________
                    A) All - View all entries
@@ -103,28 +167,55 @@ public class Main {
                    R) Reports - View the reports menu
                    H) Home - go back to the home page""").toUpperCase();
 
-           switch (userChoice) {
-               case "A":
-                   viewAllTransactions();
-                   break;
-               case "D":
-                   // view all deposits
-                   displayDeposits();
-                   break;
-               case "P":
-                   displayPayments();
-                   break;
-               case "R":
-                   reportsMenu();
-                   break;
-               case "H":
-                   homeMenu();
-                   break;
-               default:
-                   System.out.println("Invalid input, please enter a \"A\", \"D\", \"P\", \"R\", or \"H\"");
+            switch (userChoice) {
+                case "A":
+                    viewAllTransactions();
+                    break;
+                case "D":
+                    // view all deposits
+                    displayDeposits();
+                    break;
+                case "P":
+                    displayPayments();
+                    break;
+                case "R":
+                    reportsMenu();
+                    break;
+                case "H":
+                    homeMenu();
+                    break;
+                default:
+                    System.out.println("Invalid input, please enter a \"A\", \"D\", \"P\", \"R\", or \"H\"");
 
-           }
-       }
+            }
+        }
+    }
+
+    private static void viewAllTransactions(){
+        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+        for (Transaction t: transactions) {
+            System.out.println(t.toString());
+        }
+    }
+
+    private static void displayDeposits(){
+        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+        for (Transaction t: transactions) {
+            if (t.getAmount() > 0) {
+                System.out.println(t);
+            }
+
+        }
+    }
+
+    private static void displayPayments(){
+        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+        for (Transaction t : transactions){
+            if(t.getAmount() < 0) {
+                System.out.println(t);
+            }
+        }
+
     }
 
     private static void reportsMenu(){
@@ -169,60 +260,6 @@ public class Main {
             }
         }
     }
-// question about benefits of having one method for payments and deposits
-    private static void addDepositOrPayment(){
-
-        try {
-            //Prompt user for transaction information and write it to the csv file
-            FileWriter fileWriter = new FileWriter("transactions.csv", true);
-            BufferedWriter bufWriter = new BufferedWriter(fileWriter);
-
-            LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD) "));
-            LocalTime time = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction "));
-            double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
-            String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
-            String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
-
-            Transaction t = new Transaction(date, time, description, vendor, amount);
-
-            bufWriter.newLine();
-            bufWriter.write(t.toString());
-            bufWriter.close();
-
-
-    } catch(IOException e){
-            System.out.println("there was a file error");
-            e.printStackTrace();
-        }
-    }
-
-//question about how deep should i explain lambda expression
-    private static void viewAllTransactions(){
-        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
-        for (Transaction t: transactions) {
-            System.out.println(t.toString());
-        }
-    }
-
-    private static void displayDeposits(){
-        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
-        for (Transaction t: transactions) {
-            if (t.getAmount() > 0) {
-                System.out.println(t);
-            }
-
-        }
-    }
-
-    private static void displayPayments(){
-        transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
-        for (Transaction t : transactions){
-            if(t.getAmount() < 0) {
-                System.out.println(t);
-            }
-        }
-
-    }
 
     private static void monthToDate(){
         //read file line by line
@@ -236,17 +273,17 @@ public class Main {
             String fileLine;
             while ((fileLine = bufReader.readLine()) != null) {
 
-            String[] dateFromTransactions = fileLine.split("\\|");
-            String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
-            if ((yearMonthDaySplit[0].equals(todaysYearAndMonth[0])) && (yearMonthDaySplit[1].equals(todaysYearAndMonth[1]))){
-                System.out.println(fileLine);
+                String[] dateFromTransactions = fileLine.split("\\|");
+                String[] yearMonthDaySplit = dateFromTransactions[0].split("-");
+                if ((yearMonthDaySplit[0].equals(todaysYearAndMonth[0])) && (yearMonthDaySplit[1].equals(todaysYearAndMonth[1]))){
+                    System.out.println(fileLine);
                 }
 
 
                 //System.out.println(Arrays.toString(yearMonthDaySplit));
-            //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
-            //print if they match
-        }
+                //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
+                //print if they match
+            }
         }
         catch (IOException e){
             System.out.println("there was a file error");
@@ -362,26 +399,43 @@ public class Main {
 
     private static void searchByVendor(){
 
-        String userInput = ConsoleHelper.promptForString("Name of vendor: ");
+        String userInput = ConsoleHelper.promptForString("Name of vendor ");
 
         try {
             FileReader fileReader = new FileReader("transactions.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
+
             String fileLine;
+            boolean isFound = false;
+
             while ((fileLine = bufReader.readLine()) != null) {
 
                 String[] barSplit = fileLine.split("\\|");
                 String vendor = barSplit[3].toLowerCase();
                 if (vendor.contains(userInput.toLowerCase())){
                     System.out.println(fileLine);
+                    isFound = true;
                 }
-
             }
+            if (!isFound){
+                System.out.println("There are no transactions for the vendor " + "\'\'" + userInput + "\'\'" );
+            }
+
         }
         catch (IOException e){
             System.out.println("there was a file error");
         }
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

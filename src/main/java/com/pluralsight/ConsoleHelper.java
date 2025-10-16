@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -79,17 +80,36 @@ public class ConsoleHelper {
     }
 
     public static LocalDate promptForDate(String prompt){
-        LocalDate input = LocalDate.parse("");
+        LocalDate input = LocalDate.parse("2000-01-01");
         boolean isInvalid = false;
 
         do {
             try {
                 System.out.println(prompt + ": ");
-                input = LocalDate.parse(scanner.nextLine());
+                 input = LocalDate.parse(scanner.nextLine());
 
                 isInvalid = true;
             } catch (Exception ex) {
-                scanner.nextLine();
+
+                System.out.println("Invalid entry, please enter a date (YYYY-MM-DD");
+            }
+        }while(!isInvalid);
+
+        return input;
+    }
+
+    public static LocalTime promptForTime(String prompt){
+        LocalTime input = LocalTime.parse("00:00:00");
+        boolean isInvalid = false;
+
+        do {
+            try {
+                System.out.println(prompt + ": ");
+                input = LocalTime.parse(scanner.nextLine());
+
+                isInvalid = true;
+            } catch (Exception ex) {
+
                 System.out.println("Invalid entry, please enter a date (YYYY-MM-DD");
             }
         }while(!isInvalid);
