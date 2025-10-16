@@ -19,7 +19,6 @@ public class Main {
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
         homeMenu();
 
-
     }
 
     private static ArrayList<Transaction> makeCollectionOfTransactions(){
@@ -116,14 +115,14 @@ public class Main {
         String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
 
         Transaction t = new Transaction(date, time, description, vendor, -amount);
-
+        transactions.add(t);
         saveTransaction(t);
 
     }
-
+//display deposit added successfully message and payment
     private static void addDeposit(){
 
-        //LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD) "));
+
         LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
         LocalTime time = ConsoleHelper.promptForTime("Time of the transaction (HH:mm:ss) ");
         double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
@@ -131,7 +130,7 @@ public class Main {
         String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
 
         Transaction t = new Transaction(date, time, description, vendor, amount);
-
+        transactions.add(t);
         saveTransaction(t);
 
     }

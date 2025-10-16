@@ -87,7 +87,6 @@ public class ConsoleHelper {
             try {
                 System.out.println(prompt + ": ");
                  input = LocalDate.parse(scanner.nextLine());
-
                 isInvalid = true;
             } catch (Exception ex) {
 
