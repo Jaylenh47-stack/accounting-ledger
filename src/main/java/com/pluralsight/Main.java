@@ -14,8 +14,7 @@ public class Main {
     public static void main(String[] args){
 
         transactions = readTransactionsFromFileAndReturn();
-
-
+        
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
         homeMenu();
 
@@ -64,7 +63,32 @@ public class Main {
     private static ArrayList<Transaction> readTransactionsFromFileAndReturn(){
         ArrayList<Transaction> result = new ArrayList<Transaction>();
 
-        //between here, read from file and populate result...
+        try {
+            FileReader fileReader = new FileReader("transactions.csv");
+            BufferedReader bufReader = new BufferedReader((fileReader));
+            String fileLine;
+
+            while((fileLine = bufReader.readLine()) != null){
+                if(fileLine.startsWith("date")){
+                    continue;
+                }
+
+                String[] transactionParts = fileLine.split("\\|");
+                LocalDate date = LocalDate.parse(transactionParts[0]);
+                LocalTime time = LocalTime.parse(transactionParts[1]);
+                String description = transactionParts[2];
+                String vendor = transactionParts[3];
+                double amount = Double.parseDouble(transactionParts[4]);
+
+                Transaction t = new Transaction(date, time, description, vendor, amount);
+                result.add(t);
+            }
+
+        } catch (Exception e) {
+            System.out.println("There was a file error");
+            e.printStackTrace();
+        }
+
         return result;
     }
 
@@ -149,13 +173,13 @@ public class Main {
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
             BufferedWriter bufWriter = new BufferedWriter(fileWriter);
 
-            LocalDate userDate = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD): "));
-            LocalTime userTime = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction: "));
-            double userAmount = ConsoleHelper.promptForDouble("How much is the transaction for?");
-            String userDescription = ConsoleHelper.promptForString("Enter a description of the transaction ");
-            String userVendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
+            LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD): "));
+            LocalTime time = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction: "));
+            double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
+            String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
+            String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
 
-            Transaction t = new Transaction(userDate, userTime, userDescription, userVendor, userAmount);
+            Transaction t = new Transaction(date, time, description, vendor, amount);
             bufWriter.newLine();
             bufWriter.write(t.toString());
             bufWriter.close();
@@ -172,43 +196,10 @@ public class Main {
             FileReader fileReader = new FileReader("transactions.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
 
-            ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
 
-            String fileLine;
-
-            //create a list of strings for each line by splitting by "|"
-            //make a new Transaction with the newly created list
-            while((fileLine = bufReader.readLine()) !=null){
-                if (fileLine.startsWith("date")){
-                    continue;
-                }
-                String[] transactionsParts = fileLine.split("\\|");
-                Transaction t = new Transaction(LocalDate.parse(transactionsParts[0]),LocalTime.parse(transactionsParts[1]), transactionsParts[2], transactionsParts[3], Double.parseDouble(transactionsParts[4]));
-                transactionsList.add(t);
-            }
-            fileReader.close();
-            bufReader.close();
-            //System.out.println(transactionsList);
-
-            // iterate through transactionsList for the most recent date
-            boolean isAfter = false;
-
-            //compare current transaction with all other transactions until currentIteration.get(i).getDate() is before nextTransaction date
-            //make this new-found transaction with the most recent date the new transaction being compared to other transactions
-            //repeat this until there is no more transactions to compare it to
-            //print it and remove it from the arraylist
-            for (int i = 0; i < transactionsList.size(); i++){
-                int nextTransaction = i+1;
-                if (transactionsList.get(i).getDate().isAfter(transactionsList.get(nextTransaction).getDate())){
-
-                }
-
-            }
-
-        }
-        catch(IOException e){
+    }
+        catch(Exception e){
             System.out.println("There was a file error");
-            e.printStackTrace();
         }
     }
 
@@ -363,9 +354,6 @@ public class Main {
                 if (vendor.contains(userInput.toLowerCase())){
                     System.out.println(fileLine);
                 }
-
-
-
 
             }
         }
