@@ -169,7 +169,7 @@ public class Main {
             }
         }
     }
-
+// question about benefits of having one method for payments and deposits
     private static void addDepositOrPayment(){
 
         try {
@@ -177,26 +177,26 @@ public class Main {
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
             BufferedWriter bufWriter = new BufferedWriter(fileWriter);
 
-            LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD): "));
-            LocalTime time = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction: "));
+            LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD) "));
+            LocalTime time = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction "));
             double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
             String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
             String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
 
             Transaction t = new Transaction(date, time, description, vendor, amount);
+
             bufWriter.newLine();
             bufWriter.write(t.toString());
-            fileWriter.close();
             bufWriter.close();
 
 
     } catch(IOException e){
             System.out.println("there was a file error");
-            e.getStackTrace();
+            e.printStackTrace();
         }
     }
-    //ToDo: make transactions print in order
 
+//question about how deep should i explain lambda expression
     private static void viewAllTransactions(){
         transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
         for (Transaction t: transactions) {
