@@ -18,9 +18,10 @@ All options in the menus perform in the way you would naturally think according 
 of how it handles the case for if the current month is January.
 ![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/60b87ac425aaf1aa90ec5d133ccf4877dd71b472/previousMonthMethod.PNG)
 
+Something I struggled with is trying to create an algorithm for sorting from the file by date
 # Installation
 This application can be run on any computer with Intellij and JDK23 or later
 
-#Contributions
+# Contributions
 Much of the code for this was inspired by my instructor Matt's github <https://github.com/orgs/YearUpFall25-S6/repositories>.
 Some additional learnings and sample data came from <https://claude.ai/new>, <https://www.w3schools.com/java> and my wonderful Year Up United classmates.
