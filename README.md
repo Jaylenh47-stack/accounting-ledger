@@ -1,0 +1,33 @@
+# Who and Why
+My name is Jaylen Hayden, a Year Up United student who was tasked with creating an accounting ledger application for our capstone project. This application demonstrates
+my understanding of the course learnings so far and my ability to problem solve and come up with solutions.
+
+# What it does
+This is a ledger application that allows the user to track financial transactions. All functions of the software can be accessed via the three menu screens below.
+
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/771b5e419d6f193cb6a3015f3682e8caf1c6d5c4/homeMenu.PNG) 
+
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/78fe442a6cef22beb692a1beef5ca024294e181c/ledgerMenu.PNG)
+
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/a4d74f25a1677ec2abd43d68534455f27f953fde/reportsMenu.PNG)
+
+Deposits and payments are added and saved to the transaction file
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/ca9c995656d94f3eb086237d3cc0796ab861b097/transactionsFile.PNG)
+
+All options in the menus perform in the way you would naturally think according to their title. An interesting piece of code is the previousYear() method because
+of how it handles the case for if the current month is January.
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/60b87ac425aaf1aa90ec5d133ccf4877dd71b472/previousMonthMethod.PNG)
+
+Something I struggled with is trying to create an algorithm for sorting from the file by date
+![image_alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/98d79c3e234737f0bcc5dce336d80afcce2aa0c6/ss5.PNG)
+
+This was resolved once my instructor Matt pointed me to some resources to learn about sorting arraylists using lambda expressions and the sort function
+
+![image_alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/98d79c3e234737f0bcc5dce336d80afcce2aa0c6/viewAllTransactions.PNG)
+
+# Installation
+This application can be run on any computer with Intellij and JDK23 or later
+
+# Contributions
+Much of the code for this was inspired by my instructor Matt's github <https://github.com/orgs/YearUpFall25-S6/repositories>.
+Some additional learnings and sample data came from <https://claude.ai/new>, <https://www.w3schools.com/java> and my wonderful Year Up United classmates.
