@@ -107,31 +107,29 @@ public class Main {
     }
     private static void makePayment(){
 
-
         LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
         LocalTime time = ConsoleHelper.promptForTime("Time of the transaction (HH:mm:ss) ");
-        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
+
         String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
         String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
-
+        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
         Transaction t = new Transaction(date, time, description, vendor, -amount);
         transactions.add(t);
         saveTransaction(t);
+        System.out.println("Payment added successfully");
 
     }
 //display deposit added successfully message and payment
     private static void addDeposit(){
-
-
         LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
         LocalTime time = ConsoleHelper.promptForTime("Time of the transaction (HH:mm:ss) ");
-        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
         String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
         String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
-
+        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
         Transaction t = new Transaction(date, time, description, vendor, amount);
         transactions.add(t);
         saveTransaction(t);
+        System.out.println("Deposit added successfully");
 
     }
 
@@ -141,8 +139,6 @@ public class Main {
             //Prompt user for transaction information and write it to the csv file
             FileWriter fileWriter = new FileWriter("transactions.csv", true);
             BufferedWriter bufWriter = new BufferedWriter(fileWriter);
-
-
 
             bufWriter.newLine();
             bufWriter.write(t.toString());
