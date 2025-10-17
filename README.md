@@ -16,3 +16,4 @@ Deposits and payments are added and saved to the transaction file
 
 All options in the menus perform in the way you would naturally think according to their title. An interesting piece of code is the previousYear() method because
 of how it handles the case for if the current month is January.
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/60b87ac425aaf1aa90ec5d133ccf4877dd71b472/previousMonthMethod.PNG)
