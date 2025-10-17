@@ -19,6 +19,12 @@ of how it handles the case for if the current month is January.
 ![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/60b87ac425aaf1aa90ec5d133ccf4877dd71b472/previousMonthMethod.PNG)
 
 Something I struggled with is trying to create an algorithm for sorting from the file by date
+![image_alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/98d79c3e234737f0bcc5dce336d80afcce2aa0c6/ss5.PNG)
+
+This was resolved once my instructor Matt pointed me to some resources to learn about sorting arraylists using lambda expressions and the sort function
+
+![image_alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/98d79c3e234737f0bcc5dce336d80afcce2aa0c6/viewAllTransactions.PNG)
+
 # Installation
 This application can be run on any computer with Intellij and JDK23 or later
 
