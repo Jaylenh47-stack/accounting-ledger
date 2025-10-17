@@ -5,11 +5,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-//question about how deep should i explain lambda expression
-// question about benefits of having one method for payments and deposits
-//question about ConsoleHelper promptForDate and promptForTime
+
 public class Main {
-//ToDo: Ensure all error messages are working, learn about sorting an arraylist and complete the ledger menu options, add messages throughout the program that makes it more user friendly.
+
     public static ArrayList<Transaction> transactions;
 
     public static void main(String[] args){
@@ -91,20 +89,6 @@ public class Main {
         }
     }
 
-    private static void addDepositOrPayment(){
-
-        //LocalDate date = LocalDate.parse(ConsoleHelper.promptForString("Date of the transaction(YYYY-MM-DD) "));
-        LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
-        LocalTime time = LocalTime.parse(ConsoleHelper.promptForString("Time of the transaction (HH:mm:ss) "));
-        double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
-        String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
-        String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
-
-        Transaction t = new Transaction(date, time, description, vendor, amount);
-
-        saveTransaction(t);
-
-    }
     private static void makePayment(){
 
         LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
@@ -119,13 +103,14 @@ public class Main {
         System.out.println("Payment added successfully");
 
     }
-//display deposit added successfully message and payment
+
     private static void addDeposit(){
         LocalDate date = ConsoleHelper.promptForDate("Date of the transaction (YYYY-MM-DD)");
         LocalTime time = ConsoleHelper.promptForTime("Time of the transaction (HH:mm:ss) ");
         String description = ConsoleHelper.promptForString("Enter a description of the transaction ");
         String vendor = ConsoleHelper.promptForString("Who is the vendor for this transaction?");
         double amount = ConsoleHelper.promptForDouble("How much is the transaction for?");
+
         Transaction t = new Transaction(date, time, description, vendor, amount);
         transactions.add(t);
         saveTransaction(t);
@@ -199,12 +184,12 @@ public class Main {
             if (t.getAmount() > 0) {
                 System.out.println(t);
             }
-
         }
     }
 
     private static void displayPayments(){
         transactions.sort((t1,t2) -> t1.getDate().compareTo(t2.getDate()));
+
         for (Transaction t : transactions){
             if(t.getAmount() < 0) {
                 System.out.println(t);
@@ -227,23 +212,18 @@ public class Main {
 
             switch (reportsChoice) {
                 case 1:
-                    //Month to Date
                     monthToDate();
                     break;
                 case 2:
-                    // Previous Month
                     previousMonth();
                     break;
                 case 3:
-                    // Year to date
                     yearToDate();
                     break;
                 case 4:
-                    // Previous Year
                     previousYear();
                     break;
                 case 5:
-                    // Search by Vendor
                     searchByVendor();
                     break;
                 case 0:
@@ -251,13 +231,12 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid command, please type an number 0 - 5");
-
             }
         }
     }
 
     private static void monthToDate(){
-        //read file line by line
+
         String todaysDate = LocalDate.now().toString();
         String[] todaysYearAndMonth = todaysDate.split("-");
 
@@ -274,10 +253,6 @@ public class Main {
                     System.out.println(fileLine);
                 }
 
-
-                //System.out.println(Arrays.toString(yearMonthDaySplit));
-                //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
-                //print if they match
             }
         }
         catch (IOException e){
@@ -287,7 +262,7 @@ public class Main {
     }
 
     private static void previousMonth(){
-
+        //turn todaysDate into a string and split the year month and date
         String todaysDate = LocalDate.now().toString();
         String[] todaysYearMonthDaySplit = todaysDate.split("-");
 
@@ -337,7 +312,6 @@ public class Main {
         String todaysDate = LocalDate.now().toString();
         String[] todaysYearAndMonth = todaysDate.split("-");
 
-
         try {
             FileReader fileReader = new FileReader("transactions.csv");
             BufferedReader bufReader = new BufferedReader(fileReader);
@@ -350,10 +324,6 @@ public class Main {
                     System.out.println(fileLine);
                 }
 
-
-                //System.out.println(Arrays.toString(yearMonthDaySplit));
-                //compare yearMonthDaySplit[0] and yearMonthDaySplit[1] to LocalDate.now()
-                //print if they match
             }
         }
         catch (IOException e){
@@ -362,6 +332,7 @@ public class Main {
     }
 
     private static void previousYear() {
+
         String todaysDate = LocalDate.now().toString();
         String[] todaysYearMonthDaySplit = todaysDate.split("-");
         int currentYear = Integer.parseInt(todaysYearMonthDaySplit[0]);
