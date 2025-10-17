@@ -10,3 +10,6 @@ This is a ledger application that allows the user to track financial transaction
 ![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/78fe442a6cef22beb692a1beef5ca024294e181c/ledgerMenu.PNG)
 
 ![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/a4d74f25a1677ec2abd43d68534455f27f953fde/reportsMenu.PNG)
+
+Deposits and payments are added and saved to the transaction file
+![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/ca9c995656d94f3eb086237d3cc0796ab861b097/transactionsFile.PNG)
