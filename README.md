@@ -13,3 +13,6 @@ This is a ledger application that allows the user to track financial transaction
 
 Deposits and payments are added and saved to the transaction file
 ![image alt](https://github.com/Jaylenh47-stack/accounting-ledger/blob/ca9c995656d94f3eb086237d3cc0796ab861b097/transactionsFile.PNG)
+
+All options in the menus perform in the way you would naturally think according to their title. An interesting piece of code is the previousYear() method because
+of how it handles the case for if the current month is January.
