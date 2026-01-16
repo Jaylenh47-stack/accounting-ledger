@@ -19,7 +19,6 @@ public class Main {
 
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
         homeMenu();
-        int num;
 
     }
 
