@@ -41,11 +41,20 @@ public class Transaction {
         return amount;
     }
 
+//    @Override
+//    public String toString() {
+//        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+//        return date.format(dateFormat) + "|" + time.format(timeFormat) + "|" + description + "|" + vendor + "|" + String.format("%.2f", amount);
+//    }
+
+    //talk about this
     @Override
     public String toString() {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return date.format(dateFormat) + "|" + time.format(timeFormat) + "|" + description + "|" + vendor + "|" + String.format("%.2f", amount);
+        return String.format(
+                "%-15s | %-12s | %-25s | %-20s | %10.2f |",
+                date, time, description, vendor, amount
+        );
     }
 
 

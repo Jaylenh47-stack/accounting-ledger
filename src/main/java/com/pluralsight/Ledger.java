@@ -61,7 +61,7 @@ public class Ledger {
                 case "R":
                 case "REPORT":
                     System.out.println("Display reports");
-                    Reports.showReportsMenu();
+                    Reports.reportsMenu();
                     break;
 
                 //Goes back to the Main Menu screen
@@ -95,8 +95,8 @@ public class Ledger {
                 //split and store into variables
                 String[] line_part = line.trim().split("\\|");
 
-                LocalDate date = LocalDate.parse(line_part[0]);
-                LocalTime time = LocalTime.parse(line_part[1]);
+                LocalDate date = LocalDate.parse(line_part[0].trim());
+                LocalTime time = LocalTime.parse(line_part[1].trim());
                 String description = line_part[2];
                 String vendor = line_part[3];
                 double amount = Double.parseDouble(line_part[4]);

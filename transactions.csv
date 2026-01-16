@@ -131,3 +131,13 @@ date|time|description|vendor|amount
 2024-12-11|00:00:00|groceries|Aldis|100.00
 2025-10-01|12:00:00|Bonus|direct deposit|1000.00
 2025-10-01|03:00:00|Monitor|The grid|-50.00
+2022-12-22      | 12:22:22     | coffee                    | shewit               |     400.00 |
+2022-12-22      | 12:22:22     | coffee2                   | shewit2              |     300.00 |
+2022-12-22      | 12:22:22     | coffee drinks             | shewit3              |     300.00 |
+2022-12-22      | 03:22:22     | waters                    | jacob                |     100.00 |
+2022-12-22      | 12:22:22     | candy                     | shewit store         |     -30.00 |
+2022-12-12      | 12:22:22     | phone                     | apple                |     300.00 |
+2022-12-12      | 12:22:22     | phone2                    | apple                |     300.00 |
+2022-12-12      | 12:22:22     | coffeee                   | shewit6              |     300.00 |
+2022-12-12      | 12:22:22     | coffeeeee                 | shewit cold          |     300.00 |
+2025-12-20      | 12:22:22     | sneakers                  | nike                 |      30.00 |
