@@ -7,9 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Reports {
-<<<<<<< HEAD
-    
-=======
+
 
     public static void reportsMenu(){
         while(true) {
@@ -286,5 +284,4 @@ public class Reports {
 
     }
 
->>>>>>> d87b16b (final code)
 }
