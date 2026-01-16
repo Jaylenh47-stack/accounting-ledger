@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class ConsoleHelper {
 
+    //this is a good file
     private static Scanner scanner = new Scanner(System.in);
 
     public static int promptForInt(String prompt) {
