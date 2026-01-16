@@ -173,6 +173,64 @@ public class ConsoleHelper {
     }
 
 
+    //console helper for the custom search function
+    public static LocalDate promptForLocalDateCustomSearch(String prompt){
+        System.out.println(prompt);
+        String input = scanner.nextLine().trim();
+
+        //basically if user pressed enter, return null - meaning skip it
+        if(input.isEmpty() || input.equalsIgnoreCase("S")){
+            return null;
+        }
+
+        try{
+            return  LocalDate.parse(input);
+        } catch (Exception e){
+            System.out.println("Invalid date format. Please enter in YYYY-MM-DD format");
+            return promptForLocalDateCustomSearch(prompt);
+        }
+    }
+
+    //come back to this
+    public static String promptForStringCustomSearch(String prompt) {
+        String input = null;
+
+        try {
+            System.out.print(prompt + ":");
+            input = scanner.nextLine().trim();
+
+            if (input.isEmpty() || input.equalsIgnoreCase("S")) {
+                return null;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error: Invalid input. Please try again.");
+            return null;
+        }
+
+        return input;
+    }
+
+    public static Double promptForDoubleCustomSearch(String prompt){
+        System.out.println(prompt + ":");
+        String input = scanner.nextLine().trim();
+
+        //lets skip the filtering amount
+        if(input.isEmpty() || input.equalsIgnoreCase("S")){
+            return null;
+        }
+
+        try{
+            return Double.parseDouble(input);
+        } catch(Exception e){
+            System.out.println("Invalid Entry, please enter a double number");
+            return promptForDoubleCustomSearch(prompt); //this will restart and let you try again
+        }
+    }
+
+
+
+
 
 
 
