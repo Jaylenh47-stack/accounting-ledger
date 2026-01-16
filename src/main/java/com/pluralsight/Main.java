@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class Main {
     //SOME COMMENT 
 
+    //arraylist
+
     public static ArrayList<Transaction> transactions;
 
     public static void main(String[] args){
@@ -17,6 +19,7 @@ public class Main {
 
         System.out.println("Welcome to your accounting ledger! What would u like to do today?");
         homeMenu();
+        int num;
 
     }
 
